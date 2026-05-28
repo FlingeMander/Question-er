@@ -1,0 +1,16 @@
+{
+  "name": "cevital-questionnaire-backup",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Questionnaire CEVITAL avec envoi email via Nodemailer.",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  },
+  "devDependencies": {
+    "vercel": "^39.0.0"
+  }
+}
