@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questionnaire CEVITAL</title>
+  <meta name="description" content="Questionnaire académique sur la satisfaction client et la qualité des produits CEVITAL." />
+  <style>
+    :root{
+      --primary:#0f766e;
+      --primary-dark:#115e59;
+      --primary-soft:#ccfbf1;
+      --accent:#f59e0b;
+      --bg:#f4f7f9;
+      --surface:#ffffff;
+      --text:#12212a;
+      --muted:#64748b;
+      --border:#dbe4ea;
+      --danger:#b91c1c;
+      --success:#047857;
+      --shadow:0 18px 45px rgba(15, 23, 42, .10);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top left,#e0f2fe 0,#f4f7f9 34%,#f8fafc 100%);color:var(--text);line-height:1.55}
+    .progress-shell{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+    .progress-inner{max-width:980px;margin:0 auto;padding:11px 16px 10px;display:grid;gap:8px}
+    .progress-head{display:flex;justify-content:space-between;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
+    .progress-title{font-weight:700;color:var(--primary-dark)}
+    .progress-track{height:9px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+    .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:999px;transition:width .25s ease}
+    header{position:relative;overflow:hidden;background:linear-gradient(135deg,#064e3b 0%,#0f766e 52%,#14b8a6 100%);color:#fff;text-align:center;padding:48px 18px 76px}
+    header:before{content:"";position:absolute;inset:-120px -120px auto auto;width:330px;height:330px;background:rgba(255,255,255,.14);border-radius:999px}
+    header:after{content:"";position:absolute;left:-90px;bottom:-140px;width:300px;height:300px;background:rgba(255,255,255,.10);border-radius:999px}
+    .hero{position:relative;max-width:930px;margin:0 auto}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:700;margin-bottom:18px}
+    header h1{margin:0 auto 13px;font-size:clamp(28px,4vw,44px);line-height:1.12;max-width:850px;letter-spacing:-.02em}
+    header p{max-width:820px;margin:9px auto;color:#e9fffb}
+    .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;max-width:880px;margin:22px auto 0;font-size:14px;text-align:left}
+    .meta span{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:10px 12px}
+    main{max-width:980px;margin:-42px auto 46px;padding:0 16px;position:relative;z-index:2}
+    .intro-card,.card{background:var(--surface);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow)}
+    .intro-card{padding:22px;margin-bottom:18px;display:grid;gap:10px}
+    .intro-card strong{color:var(--primary-dark)}
+    .section-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .section-number{flex:0 0 auto;width:40px;height:40px;border-radius:14px;background:var(--primary-soft);color:var(--primary-dark);display:grid;place-items:center;font-weight:800}
+    .section-copy{flex:1}
+    h2{margin:0;color:var(--primary-dark);font-size:21px;line-height:1.25}
+    .hint{margin:4px 0 0;color:var(--muted);font-size:14px}
+    .card{padding:24px;margin-bottom:18px}
+    .question{margin:18px 0;padding:0 0 17px;border-bottom:1px solid var(--border)}
+    .question:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+    .qtitle{display:block;font-weight:800;margin-bottom:11px;color:#0f172a}
+    .options{display:grid;gap:10px}
+    .inline-options{display:flex;flex-wrap:wrap;gap:10px}
+    .option{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid var(--border);border-radius:14px;background:#fbfdfe;cursor:pointer;transition:transform .15s ease,border-color .15s ease,background .15s ease}
+    .option:hover{transform:translateY(-1px);border-color:#99f6e4;background:#f0fdfa}
+    input[type="radio"],input[type="checkbox"]{width:17px;height:17px;accent-color:var(--primary)}
+    input[type="text"],textarea{width:100%;margin-top:8px;padding:12px 13px;border:1px solid var(--border);border-radius:14px;font-size:15px;font-family:inherit;background:#fff;color:var(--text);outline:none;transition:border-color .15s ease,box-shadow .15s ease}
+    input[type="text"]:focus,textarea:focus{border-color:#2dd4bf;box-shadow:0 0 0 4px rgba(45,212,191,.16)}
+    textarea{min-height:118px;resize:vertical}
+    .actions{padding:24px;margin-bottom:0;text-align:center}
+    button{width:100%;border:none;border-radius:16px;padding:15px 20px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 12px 25px rgba(15,118,110,.22);transition:transform .15s ease,opacity .15s ease}
+    button:hover{transform:translateY(-1px)}
+    button:disabled{opacity:.72;cursor:not-allowed;transform:none}
+    .small{color:var(--muted);font-size:14px;margin:11px 0 0;text-align:center}
+    .status{margin:14px 0 0;padding:12px 14px;border-radius:14px;font-size:14px;display:none;text-align:left}
+    .status.error{display:block;background:#fef2f2;color:var(--danger);border:1px solid #fecaca}
+    .status.success{display:block;background:#ecfdf5;color:var(--success);border:1px solid #bbf7d0}
+    .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+    footer{text-align:center;color:var(--muted);font-size:13px;padding:24px 16px 42px}
+    @media (max-width:640px){
+      header{padding:38px 16px 68px}
+      .card,.intro-card{border-radius:20px;padding:18px}
+      .section-top{gap:12px}
+      .section-number{width:36px;height:36px}
+      .inline-options{display:grid}
+      .option{align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-shell" aria-label="Progression du questionnaire">
+    <div class="progress-inner">
+      <div class="progress-head">
+        <span class="progress-title">Progression du questionnaire</span>
+        <span id="progressText">0%</span>
+      </div>
+      <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+    </div>
+  </div>
+
+  <header>
+    <div class="hero">
+      <div class="badge">Questionnaire académique · CEVITAL</div>
+      <h1>Questionnaire : Satisfaction Client et Qualité des Produits de CEVITAL</h1>
+      <p>Ce questionnaire est anonyme et destiné à une étude académique portant sur la satisfaction des clients vis-à-vis de la qualité, des délais, de la disponibilité et du support client.</p>
+      <p><strong>Réponses anonymes – Temps estimé : 3 min</strong></p>
+      <div class="meta">
+        <span>Réalisé par : Ghenam Abdenour</span>
+        <span>Date : 27/03/2026</span>
+        <span>Version : sauvegarde GitHub/Vercel</span>
+        <span>Entreprise : SPA CEVITAL</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="intro-card">
+      <strong>Merci pour votre participation.</strong>
+      <span>Vos réponses seront envoyées automatiquement au responsable du questionnaire sous forme de tableau par email.</span>
+    </div>
+
+    <form id="surveyForm" novalidate>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <section class="card">
+        <div class="section-top">
+          <div class="section-number">1</div>
+          <div class="section-copy">
+            <h2>Partie 1 : Informations générales</h2>
+            <p class="hint">Cette partie permet d’identifier le profil général des répondants.</p>
+          </div>
+        </div>
+
+        <div class="question" data-question>
+          <label class="qtitle">1. Âge :</label>
+          <div class="options">
+            <label class="option"><input type="radio" name="Âge" value="Moins de 20 ans" required> Moins de 20 ans</label>
+            <label class="option"><input type="radio" name="Âge" value="20–30 ans"> 20–30 ans</label>
+            <label class="option"><input type="radio" name="Âge" value="31–40 ans"> 31–40 ans</label>
+            <label class="option"><input type="radio" name="Âge" value="41–50 ans"> 41–50 ans</label>
+            <label class="option"><input type="radio" name="Âge" value="Plus de 50 ans"> Plus de 50 ans</label>
+          </div>
+        </div>
+
+        <div class="question" data-question>
+          <label class="qtitle">2. Sexe :</label>
+          <div class="inline-options">
+            <label class="option"><input type="radio" name="Sexe" value="Homme" required> Homme</label>
+            <label class="option"><input type="radio" name="Sexe" value="Femme"> Femme</label>
+          </div>
+        </div>
+
+        <div class="question" data-question>
+          <label class="qtitle">3. Vous êtes :</label>
+          <div class="options">
+            <label class="option"><input type="radio" name="Type de client" value="Consommateur final" required> Consommateur final</label>
+            <label class="option"><input type="radio" name="Type de client" value="Revendeur / UAB"> Revendeur / UAB</label>
+            <label class="option"><input type="radio" name="Type de client" value="Grossiste"> Grossiste</label>
+            <label class="option"><input type="radio" name="Type de client" value="Agriculteur"> Agriculteur</label>
+          </div>
+        </div>
+
+        <div class="question" data-question>
+          <label class="qtitle">4. Fréquence d’achat :</label>
+          <div class="options">
+            <label class="option"><input type="radio" name="Fréquence d’achat" value="Très fréquente" required> Très fréquente</label>
+            <label class="option"><input type="radio" name="Fréquence d’achat" value="Fréquente"> Fréquente</label>
+            <label class="option"><input type="radio" name="Fréquence d’achat" value="Occasionnelle"> Occasionnelle</label>
+            <label class="option"><input type="radio" name="Fréquence d’achat" value="Rare"> Rare</label>
+            <label class="option"><input type="radio" name="Fréquence d’achat" value="Jamais"> Jamais</label>
+          </div>
+        </div>
+
+        <div class="question" data-question>
+          <label class="qtitle">5. Produits achetés :</label>
+          <div class="options">
+            <label class="option"><input type="checkbox" name="Produits achetés" value="Huile"> Huile</label>
+            <label class="option"><input type="checkbox" name="Produits achetés" value="Sucre"> Sucre</label>
+            <label class="option"><input type="checkbox" name="Produits achetés" value="Margarine"> Margarine</label>
+            <label class="option"><input type="checkbox" name="Produits achetés" value="Eau minérale"> Eau minérale</label>
+            <label>Autre : <input type="text" name="Produit autre" placeholder="Précisez le produit"></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-top">
+          <div class="section-number">2</div>
+          <div class="section-copy">
+            <h2>Partie 2 : Perception de la qualité du produit</h2>
+            <p class="hint">Cette partie évalue la qualité perçue, l’emballage et le rapport qualité-prix.</p>
+          </div>
+        </div>
+
+        <div class="question" data-question><label class="qtitle">6. La qualité générale du produit est :</label><div class="inline-options">
+          <label class="option"><input type="radio" name="Qualité générale" value="Très satisfaisant" required> Très satisfaisant</label>
+          <label class="option"><input type="radio" name="Qualité générale" value="Satisfaisant"> Satisfaisant</label>
+          <label class="option"><input type="radio" name="Qualité générale" value="Moyen"> Moyen</label>
+          <label class="option"><input type="radio" name="Qualité générale" value="Peu satisfaisant"> Peu satisfaisant</label>
+          <label class="option"><input type="radio" name="Qualité générale" value="Insatisfaisant"> Insatisfaisant</label>
+        </div></div>
+
+        <div class="question" data-question><label class="qtitle">7. L’emballage du produit est :</label><div class="inline-options">
+          <label class="option"><input type="radio" name="Emballage" value="Très satisfaisant" required> Très satisfaisant</label>
+          <label class="option"><input type="radio" name="Emballage" value="Satisfaisant"> Satisfaisant</label>
+          <label class="option"><input type="radio" name="Emballage" value="Moyen"> Moyen</label>
+          <label class="option"><input type="radio" name="Emballage" value="Peu satisfaisant"> Peu satisfaisant</label>
+          <label class="option"><input type="radio" name="Emballage" value="Insatisfaisant"> Insatisfaisant</label>
+        </div></div>
+
+        <div class="question" data-question><label class="qtitle">8. Les caractéristiques des produits sont :</label><div class="inline-options">
+          <label class="option"><input type="radio" name="Caractéristiques des produits" value="Très satisfaisants" required> Très satisfaisants</label>
+          <label class="option"><input type="radio" name="Caractéristiques des produits" value="Satisfaisants"> Satisfaisants</label>
+          <label class="option"><input type="radio" name="Caractéristiques des produits" value="Moyens"> Moyens</label>
+          <label class="option"><input type="radio" name="Caractéristiques des produits" value="Peu satisfaisants"> Peu satisfaisants</label>
+          <label class="option"><input type="radio" name="Caractéristiques des produits" value="Insatisfaisants"> Insatisfaisants</label>
+        </div></div>
+
+        <div class="question" data-question><label class="qtitle">9. Le rapport qualité–prix est :</label><div class="inline-options">
+          <label class="option"><input type="radio" name="Rapport qualité-prix" value="Très satisfaisant" required> Très satisfaisant</label>
+          <label class="option"><input type="radio" name="Rapport qualité-prix" value="Satisfaisant"> Satisfaisant</label>
+          <label class="option"><input type="radio" name="Rapport qualité-prix" value="Moyen"> Moyen</label>
+          <label class="option"><input type="radio" name="Rapport qualité-prix" value="Peu satisfaisant"> Peu satisfaisant</label>
+          <label class="option"><input type="radio" name="Rapport qualité-prix" value="Insatisfaisant"> Insatisfaisant</label>
+        </div></div>
+
+        <div class="question" data-question><label class="qtitle">10. Le produit respecte les normes d’hygiène et de sécurité :</label><div class="inline-options">
+          <label class="option"><input type="radio" name="Respect normes hygiène et sécurité" value="Très satisfaisant" required> Très satisfaisant</label>
+          <label class="option"><input type="radio" name="Respect normes hygiène et sécurité" value="Satisfaisant"> Satisfaisant</label>
+          <label class="option"><input type="radio" name="Respect normes hygiène et sécurité" value="Moyen"> Moyen</label>
+          <label class="option"><input type="radio" name="Respect normes hygiène et sécurité" value="Peu satisfaisant"> Peu satisfaisant</label>
+          <label class="option"><input type="radio" name="Respect normes hygiène et sécurité" value="Insatisfaisant"> Insatisfaisant</label>
+        </div></div>
+      </section>
+
+      <section class="card">
+        <div class="section-top">
+          <div class="section-number">3</div>
+          <div class="section-copy">
+            <h2>Partie 3 : Délais – Support – Disponibilité</h2>
+            <p class="hint">Cette partie traite la disponibilité des produits et la réactivité du service client.</p>
+          </div>
+        </div>
+
+        <div class="question" data-question><label class="qtitle">11. Disponibilité des produits :</label><div class="options">
+          <label class="option"><input type="radio" name="Disponibilité des produits" value="Toujours disponible" required> Toujours disponible</label>
+          <label class="option"><input type="radio" name="Disponibilité des produits" value="Souvent disponible"> Souvent disponible</label>
+          <label class="option"><input type="radio" name="Disponibilité des produits" value="Parfois indisponible"> Parfois indisponible</label>
+          <label class="option"><input type="radio" name="Disponibilité des produits" value="Souvent indisponible"> Souvent indisponible</label>
+        </div></div>
+
+        <div class="question" data-question><label class="qtitle">12. Réactivité du service client en cas de réclamation :</label><div class="options">
+          <label class="option"><input type="radio" name="Réactivité du service client" value="Très réactif" required> Très réactif</label>
+          <label class="option"><input type="radio" name="Réactivité du service client" value="Réactif"> Réactif</label>
+          <label class="option"><input type="radio" name="Réactivité du service client" value="Peu réactif"> Peu réactif</label>
+          <label class="option"><input type="radio" name="Réactivité du service client" value="Non réactif"> Non réactif</label>
+        </div></div>
+      </section>
+
+      <section class="card">
+        <div class="section-top">
+          <div class="section-number">4</div>
+          <div class="section-copy">
+            <h2>Partie 4 : Réclamations et améliorations</h2>
+            <p class="hint">Cette partie permet d’identifier les réclamations et les aspects prioritaires à améliorer.</p>
+          </div>
+        </div>
+
+        <div class="question" data-question><label class="qtitle">13. Avez-vous déjà eu un problème avec un produit CEVITAL ?</label><div class="inline-options">
+          <label class="option"><input type="radio" name="Problème avec un produit CEVITAL" value="Oui" required> Oui</label>
+          <label class="option"><input type="radio" name="Problème avec un produit CEVITAL" value="Non"> Non</label>
+        </div><input type="text" name="Si oui, lequel ?" placeholder="Si oui, lequel ?" /></div>
+
+        <div class="question" data-question><label class="qtitle">14. Votre réclamation a-t-elle été traitée de manière satisfaisante ?</label><div class="options">
+          <label class="option"><input type="radio" name="Réclamation traitée satisfaisante" value="Oui" required> Oui</label>
+          <label class="option"><input type="radio" name="Réclamation traitée satisfaisante" value="Partiellement"> Partiellement</label>
+          <label class="option"><input type="radio" name="Réclamation traitée satisfaisante" value="Non"> Non</label>
+          <label class="option"><input type="radio" name="Réclamation traitée satisfaisante" value="Je n’ai jamais réclamé"> Je n’ai jamais réclamé</label>
+        </div></div>
+
+        <div class="question" data-question><label class="qtitle">15. Quels aspects doivent être améliorés selon vous ? (Plusieurs réponses possibles)</label><div class="options">
+          <label class="option"><input type="checkbox" name="Aspects à améliorer" value="Qualité du produit"> Qualité du produit</label>
+          <label class="option"><input type="checkbox" name="Aspects à améliorer" value="Emballage"> Emballage</label>
+          <label class="option"><input type="checkbox" name="Aspects à améliorer" value="Prix"> Prix</label>
+          <label class="option"><input type="checkbox" name="Aspects à améliorer" value="Disponibilité"> Disponibilité</label>
+          <label class="option"><input type="checkbox" name="Aspects à améliorer" value="Service après-vente"> Service après-vente</label>
+          <label class="option"><input type="checkbox" name="Aspects à améliorer" value="Communication / Information"> Communication / Information</label>
+          <label>Autre : <input type="text" name="Aspect autre" placeholder="Précisez"></label>
+        </div></div>
+
+        <div class="question" data-question><label class="qtitle" for="suggestions">16. Avez-vous des suggestions pour améliorer les produits de CEVITAL ?</label>
+          <textarea id="suggestions" name="Suggestions" placeholder="Écrivez votre réponse ici..."></textarea>
+        </div>
+      </section>
+
+      <section class="card actions">
+        <button id="submitBtn" type="submit">Envoyer mes réponses</button>
+        <p class="small">Après l’envoi, vous serez redirigé vers une page de confirmation.</p>
+        <div id="statusBox" class="status" role="status" aria-live="polite"></div>
+      </section>
+    </form>
+  </main>
+
+  <footer>Questionnaire académique – Satisfaction Client et Qualité des Produits de CEVITAL</footer>
+
+  <script>
+    const form = document.getElementById('surveyForm');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusBox = document.getElementById('statusBox');
+    const questionBlocks = Array.from(document.querySelectorAll('[data-question]'));
+
+    function blockIsAnswered(block){
+      const inputs = Array.from(block.querySelectorAll('input, textarea'));
+      return inputs.some((input) => {
+        if(input.type === 'radio' || input.type === 'checkbox') return input.checked;
+        return input.value.trim().length > 0;
+      });
+    }
+
+    function updateProgress(){
+      const answered = questionBlocks.filter(blockIsAnswered).length;
+      const percent = Math.round((answered / questionBlocks.length) * 100);
+      progressBar.style.width = percent + '%';
+      progressText.textContent = percent + '%';
+    }
+
+    function showStatus(type, message){
+      statusBox.className = 'status ' + type;
+      statusBox.textContent = message;
+    }
+
+    function collectAnswers(formElement){
+      const fd = new FormData(formElement);
+      const answers = {};
+
+      for (const [key, value] of fd.entries()) {
+        if (key === 'website') continue;
+        const cleanValue = typeof value === 'string' ? value.trim() : value;
+        if (!cleanValue) continue;
+
+        if (Object.prototype.hasOwnProperty.call(answers, key)) {
+          if (!Array.isArray(answers[key])) answers[key] = [answers[key]];
+          answers[key].push(cleanValue);
+        } else {
+          answers[key] = cleanValue;
+        }
+      }
+
+      return answers;
+    }
+
+    form.addEventListener('input', updateProgress);
+    form.addEventListener('change', updateProgress);
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      statusBox.style.display = 'none';
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        showStatus('error', 'Veuillez compléter les questions obligatoires avant l’envoi.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi en cours...';
+      progressBar.style.width = '100%';
+      progressText.textContent = '100%';
+
+      try {
+        const response = await fetch('/.netlify/functions/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            answers: collectAnswers(form),
+            submittedAt: new Date().toISOString(),
+            source: window.location.href,
+            userAgent: navigator.userAgent
+          })
+        });
+
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Erreur pendant l’envoi.');
+
+        showStatus('success', 'Réponse envoyée avec succès. Redirection...');
+        window.location.href = '/success.html';
+      } catch (error) {
+        showStatus('error', 'L’envoi n’a pas fonctionné : ' + error.message + ' Vérifiez la configuration du serveur et les variables Gmail.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Envoyer mes réponses';
+        updateProgress();
+      }
+    });
+
+    updateProgress();
+  </script>
+</body>
+</html>
